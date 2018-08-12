@@ -1,0 +1,22 @@
+--- a/drivers/net/dsa/mv88e6060.c
++++ b/drivers/net/dsa/mv88e6060.c
+@@ -115,7 +115,8 @@ static int mv88e6060_switch_reset(struct
+ 	REG_WRITE(REG_GLOBAL, GLOBAL_ATU_CONTROL,
+ 		  GLOBAL_ATU_CONTROL_SWRESET |
+ 		  GLOBAL_ATU_CONTROL_ATUSIZE_1024 |
+-		  GLOBAL_ATU_CONTROL_ATE_AGE_5MIN);
++		  GLOBAL_ATU_CONTROL_ATE_AGE_5MIN |
++		  GLOBAL_ATU_CONTROL_LEARNDIS); // disable Marvell 88E6060 mac learning because it doesn't work with station roaming
+ 
+ 	/* Wait up to one second for reset to complete. */
+ 	timeout = jiffies + 1 * HZ;
+@@ -146,7 +147,8 @@ static int mv88e6060_setup_global(struct
+ 	 */
+ 	REG_WRITE(REG_GLOBAL, GLOBAL_ATU_CONTROL,
+ 		  GLOBAL_ATU_CONTROL_ATUSIZE_1024 |
+-		  GLOBAL_ATU_CONTROL_ATE_AGE_5MIN);
++		  GLOBAL_ATU_CONTROL_ATE_AGE_5MIN |
++		  GLOBAL_ATU_CONTROL_LEARNDIS); // disable Marvell 88E6060 mac learning because it doesn't work with station roaming
+ 
+ 	return 0;
+ }
